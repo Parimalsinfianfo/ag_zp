@@ -35,12 +35,10 @@ from langchain.chains.question_answering import load_qa_chain
 from bs4 import BeautifulSoup
 
 # Environment Configuration
-os.environ["LANGSMITH_ENDPOINT"] = "https://api.smith.langchain.com"
-os.environ["LANGSMITH_API_KEY"] = "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"
-os.environ["LANGSMITH_PROJECT"] = "RAG_QNA_DOC"
-os.environ["GROQ_API_KEY"] = "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"
-os.environ["HF_TOKEN"] = "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"
-os.environ["LANGSMITH_TRACING"] = "true"
+# Replace hardcoded values with environment variables
+os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY", "")
+os.environ["GROQ_API_KEY"] = os.getenv("GROQ_API_KEY", "")
+os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN", "")
 
 # Configuration
 GROQ_API_KEY = os.environ["GROQ_API_KEY"]
@@ -48,8 +46,8 @@ EMAIL_CONFIG = {
     "provider": "gmail",
     "smtp_server": "smtp.gmail.com",
     "smtp_port": 587,
-    "email": "parimalhkulkarni2@gmail.com",
-    "password": "qihx zwoy pvrx ccev",
+    "email": os.getenv("EMAIL_USER"),  # Use env vars
+    "password": os.getenv("EMAIL_PASSWORD"),  # Use env vars
     "enabled": True
 }
 
@@ -61,7 +59,8 @@ URLS = [
     "https://www.zedprodigital.com/odoo-partners/",
     "https://www.zedprodigital.com/lets-get-connected/"
 ]
-
+app.mount("/static", StaticFiles(directory=os.path.join(os.getcwd(), "static")), name="static")
+templates = Jinja2Templates(directory=os.path.join(os.getcwd(), "templates"))
 # Global variables for AI components
 llm = None
 embeddings = None
@@ -103,8 +102,9 @@ class KnowledgeBase(BaseModel):
 
 # Database Setup
 def init_database():
-    conn = sqlite3.connect('ai_service_agent.db')
-    cursor = conn.cursor()
+    db_path = os.path.join(os.getcwd(), 'ai_service_agent.db')  # Absolute path
+    conn = sqlite3.connect(db_path)
+    # ... rest of the code
     
     tables = [
         '''CREATE TABLE IF NOT EXISTS visitors (
@@ -210,7 +210,12 @@ async def scrape_domain_content(urls: List[str]) -> List[Document]:
 async def initialize_ai_components():
     global llm, embeddings, vectorstore, qa_chain
     
+    if not os.environ.get("GROQ_API_KEY"):
+        print("GROQ_API_KEY not set. Skipping AI initialization.")
+        return
+    
     try:
+        # ... existing initialization code
         # Initialize LLM
         llm = ChatGroq(
             groq_api_key=GROQ_API_KEY,
@@ -737,8 +742,15 @@ async def health_check():
             "qa_chain": qa_chain is not None
         }
     }
+@app.on_event("shutdown")
+async def shutdown_event():
+    print("Waiting for background tasks to complete...")
+    await asyncio.sleep(2)  # Grace period
 
 # Render deployment entry point
+# ... rest of your code ...
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))  # Render compatibility
+    uvicorn.run(app, host="0.0.0.0", port=port)
