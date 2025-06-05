@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: ai-service-agent
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    plan: starter
+    envVars:
+      - key: GROQ_API_KEY
+        value: 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
+      - key: HF_TOKEN
+        value: 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
+      - key: LANGSMITH_ENDPOINT
+        value: https://api.smith.langchain.com
+      - key: LANGSMITH_API_KEY
+        value: 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
+      - key: LANGSMITH_PROJECT
+        value: RAG_QNA_DOC
+      - key: LANGSMITH_TRACING
+        value: "true"
+      - key: PYTHON_VERSION
+        value: "3.11.0"

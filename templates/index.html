@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZedPro Digital - AI & Digital Solutions</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: #667eea;
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.bot {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            padding: 120px 0 80px;
+            background: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .chat-window {
+                width: 300px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
+            z-index: 1500;
+            display: none;
+        }
+
+        .notification.error {
+            background: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">ZedPro Digital</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#" onclick="showDashboard()">Dashboard</a></li>
+                    <li><a href="#" onclick="openModal('contactModal')">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="fade-in-up">Transform Your Business with AI</h1>
+            <p class="fade-in-up">Unlock the power of artificial intelligence and digital transformation with ZedPro Digital's cutting-edge solutions</p>
+            <div class="cta-buttons fade-in-up">
+                <a href="#" class="btn btn-primary" onclick="openModal('contactModal')">
+                    <i class="fas fa-rocket"></i>
+                    Get Started
+                </a>
+                <a href="#services" class="btn btn-secondary">
+                    <i class="fas fa-eye"></i>
+                    View Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our AI & Digital Solutions</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in-up">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Chatbot Automation</h3>
+                    <p>Intelligent chatbots for customer service, lead generation, and business process automation.</p>
+                </div>
+                <div class="service-card fade-in-up">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Predictive Machine Learning</h3>
+                    <p>Advanced ML algorithms and predictive analytics to help you make data-driven decisions.</p>
+                </div>
+                <div class="service-card fade-in-up">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Responsive Web Development</h3>
+                    <p>Modern, responsive websites and web applications built with the latest technologies.</p>
+                </div>
+                <div class="service-card fade-in-up">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Cross-Platform Mobile Apps</h3>
+                    <p>Native and cross-platform mobile applications for iOS and Android.</p>
+                </div>
+                <div class="service-card fade-in-up">
+                    <div class="service-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Scalable Cloud Services</h3>
+                    <p>Cloud infrastructure and services for scalability, reliability, and performance.</p>
+                </div>
+                <div class="service-card fade-in-up">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Data-Driven Marketing</h3>
+                    <p>Marketing strategies powered by data analytics and customer insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard">
+        <div class="container">
+            <h2 class="section-title">Analytics Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalVisitors">0</div>
+                    <div>Total Visitors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalLeads">0</div>
+                    <div>Total Leads</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="emailsSent">0</div>
+                    <div>Emails Sent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="todayVisitors">0</div>
+                    <div>Today's Visitors</div>
+                </div>
+            </div>
+            <div class="loading" id="dashboardLoading">
+                <div class="spinner"></div>
+                <p>Loading analytics data...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('contactModal')">&times;</button>
+            <h2>Get In Touch</h2>
+            <p>Let's discuss your AI and digital transformation needs!</p>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="interest">Domain of Interest</label>
+                    <select id="interest" name="interest">
+                        <option value="">Select your interest</option>
+                        <option value="AI Chatbot Automation">AI Chatbot Automation</option>
+                        <option value="Predictive Machine Learning">Predictive Machine Learning</option>
+                        <option value="Responsive Web Development">Responsive Web Development</option>
+                        <option value="Cross-Platform Mobile Apps">Cross-Platform Mobile Apps</option>
+                        <option value="Scalable Cloud Services">Scalable Cloud Services</option>
+                        <option value="Data-Driven Marketing">Data-Driven Marketing</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h4>AI Assistant</h4>
+                <p>Ask me about our AI and digital services!</p>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    Hi! I'm ZedPro Digital's AI assistant. I can help you with information about:
+                    <ul>
+                        <li>AI Chatbot Automation</li>
+                        <li>Predictive Machine Learning</li>
+                        <li>Responsive Web Development</li>
+                        <li>Cross-Platform Mobile Apps</li>
+                        <li>Scalable Cloud Services</li>
+                        <li>Data-Driven Marketing</li>
+                    </ul>
+                    How can I assist you today?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        <button class="chat-toggle" onclick="toggleChat()">
+            <i class="fas fa-comments"></i>
+        </button>
+    </div>
+
+    <script>
+        // Global variables
+        let sessionId = generateSessionId();
+        let chatOpen = false;
+        let pageLoadTime = Date.now();
+
+        // Generate session ID
+        function generateSessionId() {
+            return 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            trackPageVisit();
+            setupAnimations();
+        });
+
+        // Track page visit
+        function trackPageVisit() {
+            fetch('/api/track/page', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    session_id: sessionId,
+                    page_url: window.location.href,
+                    time_spent: 0
+                })
+            }).catch(console.error);
+        }
+
+        // Setup animations
+        function setupAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-up');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.service-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                city: document.getElementById('city').value,
+                interest_domain: document.getElementById('interest').value,
+                session_id: sessionId
+            };
+
+            try {
+                const response = await fetch('/api/visitor/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification('Thank you! We\'ll be in touch soon.', 'success');
+                    closeModal('contactModal');
+                    document.getElementById('contactForm').reset();
+                } else {
+                    showNotification('Error submitting form. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error submitting form. Please try again.', 'error');
+            }
+        });
+
+        // Chat functions
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatOpen = !chatOpen;
+            chatWindow.style.display = chatOpen ? 'flex' : 'none';
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: sessionId
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    addMessage(result.response, 'bot');
+                } else {
+                    addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                }
+            } catch (error) {
+                console.error('Chat error:', error);
+                addMessage('Sorry, I\'m having trouble connecting. Please try again later.', 'bot');
+            }
+        }
+
+        function addMessage(text, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = text;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Dashboard functions
+        async function showDashboard() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('services').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('dashboardLoading').style.display = 'block';
+
+            try {
+                const response = await fetch('/api/analytics/dashboard');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const data = result.data;
+                    document.getElementById('totalVisitors').textContent = data.total.visitors;
+                    document.getElementById('totalLeads').textContent = data.total.leads;
+                    document.getElementById('emailsSent').textContent = data.total.emails;
+                    document.getElementById('todayVisitors').textContent = data.today.visitors;
+                }
+            } catch (error) {
+                console.error('Dashboard error:', error);
+                showNotification('Error loading dashboard data', 'error');
+            } finally {
+                document.getElementById('dashboardLoading').style.display = 'none';
+            }
+        }
+
+        // Notification function
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type === 'error' ? 'error' : ''}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Track time spent on page
+        window.addEventListener('beforeunload', function() {
+            const timeSpent = Math.floor((Date.now() - pageLoadTime) / 1000);
+            navigator.sendBeacon('/api/track/page', JSON.stringify({
+                session_id: sessionId,
+                page_url: window.location.href,
+                time_spent: timeSpent
+            }));
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
